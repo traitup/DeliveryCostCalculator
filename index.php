@@ -26,7 +26,7 @@
             height: 100%;
             margin: auto;
             border: 4px solid #dddddd;
-            background: #ffffff;
+            background: #fff00f;
             overflow: auto;
             z-index: 2;
         }
