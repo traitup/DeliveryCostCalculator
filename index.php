@@ -74,6 +74,7 @@
     </style>
 
     <script type="text/javascript" src="https://api.longdo.com/map/?key=b5231ae6110f3ae6ebf8ea15401177bf"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <?php
         // สร้างลิงก์ไฟล์ JavaScript
         echo '<script type="text/javascript" src="script.js"></script>';
@@ -100,7 +101,7 @@
             <input type="text" name="storeLongitude" id="storeLongitude">
         </div>
     </div>
-    <button onclick="calculateRoute()">Calculate Route</button>
+    <button onclick="longdoMapRouting()">Calculate Route</button>
     <div id="map"></div>
     <div id="result"></div>
 </body>

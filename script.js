@@ -41,30 +41,55 @@ function init() {
     map = new longdo.Map({
         placeholder: document.getElementById('map')
     });
+    longdoMapRouting();
 }
 
-function calculateRoute() {
-    var customerLatitude = parseFloat(document.getElementById('customerLatitude').value);
-    var customerLongitude = parseFloat(document.getElementById('customerLongitude').value);
-    var storeLatitude = parseFloat(document.getElementById('storeLatitude').value);
-    var storeLongitude = parseFloat(document.getElementById('storeLongitude').value);
+function longdoMapRouting(customerLatitude,customerLongitude,storeLatitude,storeLongitude) { 
+    $.ajax({ 
+            url: "https://api.longdo.com/RouteService/json/route/guide?", 
+            dataType: "jsonp", 
+            type: "GET", 
+            contentType: "application/json", 
+            data: {
+                key: "b5231ae6110f3ae6ebf8ea15401177bf",
+                clon: customerLongitude,
+                clat: customerLatitude,
+                slon: storeLongitude,
+                slat: storeLatitude
+        },
+        success: function (results)
+        {
+            console.log(results);
+        },
+        error: function (response)
+        {
+            console.log(response);
+        }
+    });
+  }
+  
+// function calculateRoute() {
+//     var customerLatitude = parseFloat(document.getElementById('customerLatitude').value);
+//     var customerLongitude = parseFloat(document.getElementById('customerLongitude').value);
+//     var storeLatitude = parseFloat(document.getElementById('storeLatitude').value);
+//     var storeLongitude = parseFloat(document.getElementById('storeLongitude').value);
 
-    // ตรวจสอบว่าผู้ใช้กรอกค่าละติจูดและลองจิจูดทั้งหมดหรือไม่
-    if (isNaN(customerLatitude) || isNaN(customerLongitude) || isNaN(storeLatitude) || isNaN(storeLongitude)) {
-        alert('Please enter valid latitude and longitude for both customer and store.');
-        return;
-    }
+//     // ตรวจสอบว่าผู้ใช้กรอกค่าละติจูดและลองจิจูดทั้งหมดหรือไม่
+//     if (isNaN(customerLatitude) || isNaN(customerLongitude) || isNaN(storeLatitude) || isNaN(storeLongitude)) {
+//         alert('Please enter valid latitude and longitude for both customer and store.');
+//         return;
+//     }
 
-    init();
-    map.Route.placeholder(document.getElementById('result'));
-    console.log(result);
-    map.Route.add(new longdo.Marker({ lon: customerLongitude, lat: customerLatitude }, {
-        title: 'Customer',
-        detail: 'Customer Location'
-    }));
-    map.Route.add(new longdo.Marker({ lon: storeLongitude, lat: storeLatitude }, {
-        title: 'Store',
-        detail: 'Store Location'
-    }));
-    map.Route.search();
-}
+//     init();
+//     map.Route.placeholder(document.getElementById('result'));
+//     console.log(result);
+//     map.Route.add(new longdo.Marker({ lon: customerLongitude, lat: customerLatitude }, {
+//         title: 'Customer',
+//         detail: 'Customer Location'
+//     }));
+//     map.Route.add(new longdo.Marker({ lon: storeLongitude, lat: storeLatitude }, {
+//         title: 'Store',
+//         detail: 'Store Location'
+//     }));
+//     map.Route.search();
+// }
