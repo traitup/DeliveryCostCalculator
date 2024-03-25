@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Create Map Sample | Longdo Map</title>
     <style type="text/css">
+<<<<<<< HEAD
         html, body {
             height: 100%;
             margin: 0;
@@ -56,10 +57,26 @@
             margin-bottom: 10px;
         }
 
+=======
+      html{
+        height:100%;
+      }
+      body{
+        margin:0px;
+        height:100%;
+      }
+      #map {
+        height: 80%;
+      }
+      #inputs {
+        padding: 10px;
+      }
+>>>>>>> 884d2e44db86235034dcb1f6de3cc3a3e836e901
     </style>
 
     <script type="text/javascript" src="https://api.longdo.com/map/?key=b5231ae6110f3ae6ebf8ea15401177bf"></script>
     <script>
+<<<<<<< HEAD
         var distance;
         
         function init() {
@@ -88,6 +105,36 @@
             map.Route.add({ lon: endLon, lat: endLat });
             map.Route.search();
             });
+=======
+    var distance;
+    
+      function init() {
+        var map = new longdo.Map({
+          placeholder: document.getElementById('map')
+        });
+
+        var startLatInput = document.getElementById('startLat');
+        var startLonInput = document.getElementById('startLon');
+        var endLatInput = document.getElementById('endLat');
+        var endLonInput = document.getElementById('endLon');
+
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+          var startLat = parseFloat(startLatInput.value);
+          var startLon = parseFloat(startLonInput.value);
+          var endLat = parseFloat(endLatInput.value);
+          var endLon = parseFloat(endLonInput.value);
+
+          if (isNaN(startLat) || isNaN(startLon) || isNaN(endLat) || isNaN(endLon)) {
+            alert('Please enter valid latitude and longitude for both points.');
+            return;
+          }
+
+          map.Route.clear();
+          map.Route.add({ lon: startLon, lat: startLat });
+          map.Route.add({ lon: endLon, lat: endLat });
+          map.Route.search();
+        });
+>>>>>>> 884d2e44db86235034dcb1f6de3cc3a3e836e901
 
         map.Event.bind('guideComplete', function() {
             distance = map.Route.distance();
@@ -107,6 +154,7 @@
                 shippingCost = "Please contact customer service for shipping rates for distances greater than 50 kilometers.";
             }
 
+<<<<<<< HEAD
             // console.log('Shipping Cost:', shippingCost);
 
             // แสดงชื่อสถานที่ที่ปักบนแผนที่
@@ -157,5 +205,27 @@
     </div>
 
     <div id="map"></div>
+=======
+            console.log('Shipping Cost:', shippingCost);
+        });
+      }
+    </script>
+</head>
+<body onload="init();">
+    <div id="map"></div>
+    <div id="inputs">
+        <label for="startLat">Start Latitude:</label>
+        <input type="text" id="startLat" name="startLat">
+        <label for="startLon">Start Longitude:</label>
+        <input type="text" id="startLon" name="startLon">
+        <br>
+        <label for="endLat">End Latitude:</label>
+        <input type="text" id="endLat" name="endLat">
+        <label for="endLon">End Longitude:</label>
+        <input type="text" id="endLon" name="endLon">
+        <br>
+        <button id="calculateBtn">Calculate Route</button>
+    </div>
+>>>>>>> 884d2e44db86235034dcb1f6de3cc3a3e836e901
 </body>
 </html>
