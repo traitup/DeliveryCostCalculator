@@ -1,0 +1,234 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Map Sample | Longdo Map</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            /* สีพื้นหลังของหน้าเว็บ */
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Itim', sans-serif;
+        }
+
+        #map {
+            width: 100%;
+            height: 60vh;
+            border: 2px solid #dddddd;
+            margin-bottom: 20px;
+            /* เพิ่มระยะห่างด้านล่างของแผนที่ */
+            border-radius: 10px;
+            /* เพิ่มมุมขอบของแผนที่ */
+            overflow: hidden;
+            /* ซ่อนเนื้อหาที่อาจเกินขอบ */
+        }
+
+        #inputs {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 0px 25%;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            width: 150px;
+            height: 60px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        #inputs {
+            margin-bottom: 20px;
+        }
+
+        #calculateBtn {
+            text-align: center;
+        }
+
+        #result {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 70%;
+            text-align: center;
+            font-size: 20px;
+            font-family: 'Itim', sans-serif;
+            border: 1px solid rgb(255, 255, 255);
+            /* เส้นขอบกรอบ */
+            background-color: #ffffff;
+            padding: 10px;
+            /* ระยะห่างขอบภายในกรอบ */
+            width: 1400px;
+            /* ความกว้างของกรอบ */
+            margin: 10px;
+            /* ระยะห่างรอบกรอบ */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            /* เพิ่มเงาดำ */
+        }
+
+        .message-box {
+            border: 1px solid rgb(255, 255, 255);
+            /* เส้นขอบกรอบ */
+            background-color: #ffffff;
+            padding: 10px;
+            /* ระยะห่างขอบภายในกรอบ */
+            width: 1400px;
+            /* ความกว้างของกรอบ */
+            margin: 30px;
+            /* ระยะห่างรอบกรอบ */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            /* เพิ่มเงาดำ */
+        }
+    </style>
+
+    <script type="text/javascript" src="https://api.longdo.com/map/?key=b5231ae6110f3ae6ebf8ea15401177bf"></script>
+    <script>
+        var distance;
+
+        function init() {
+            var map = new longdo.Map({
+                placeholder: document.getElementById('map')
+            });
+
+            var startLatInput = document.getElementById('startLat');
+            var startLonInput = document.getElementById('startLon');
+            var endLatInput = document.getElementById('endLat');
+            var endLonInput = document.getElementById('endLon');
+
+            document.getElementById('calculateBtn').addEventListener('click', function () {
+                var startLat = parseFloat(startLatInput.value);
+                var startLon = parseFloat(startLonInput.value);
+                var endLat = parseFloat(endLatInput.value);
+                var endLon = parseFloat(endLonInput.value);
+
+                if (isNaN(startLat) || isNaN(startLon) || isNaN(endLat) || isNaN(endLon)) {
+                    alert('Please enter valid latitude and longitude for both points.');
+                    return;
+                }
+
+                map.Route.clear();
+                map.Route.add({ lon: startLon, lat: startLat });
+                map.Route.add({ lon: endLon, lat: endLat });
+                map.Route.search();
+            });
+
+            map.Event.bind('guideComplete', function () {
+                distance = map.Route.distance();
+                console.log(distance);
+
+                // แปลงค่าระยะทางจากเมตรเป็นกิโลเมตร
+                var distanceInKm = distance * 0.001;
+
+                var shippingCost;
+                if (distanceInKm <= 1) {
+                    shippingCost = 39;
+                } else if (distanceInKm <= 9) {
+                    shippingCost = 39 + (distanceInKm - 1) * 8;
+                } else if (distanceInKm <= 50) {
+                    shippingCost = 39 + 8 * 8 + (distanceInKm - 9) * 10;
+                } else {
+                    shippingCost = "Please contact customer service for shipping rates for distances greater than 50 kilometers.";
+                }
+
+                // console.log('Shipping Cost:', shippingCost);
+
+                // แสดงผล shippingCost บนหน้าเว็บ
+                var resultContainer = document.getElementById('result');
+                if (resultContainer) {
+                    resultContainer.innerHTML = 'ค่าใช้จ่ายในการจัดส่งสินค้า: ' + shippingCost + ' ' + 'บาท' + '<br>ระยะทาง: ' + distanceInKm.toFixed(2) + ' กิโลเมตร';
+                } else {
+                    // สร้าง element div ใหม่เพื่อแสดงผล shippingCost หากยังไม่มี
+                    resultContainer = document.createElement('div');
+                    resultContainer.id = 'result';
+                    resultContainer.innerHTML = 'ค่าใช้จ่ายในการจัดส่งสินค้า: ' + shippingCost + ' ' + 'บาท' + '<br>ระยะทาง: ' + distanceInKm.toFixed(2) + ' กิโลเมตร';
+                    document.body.appendChild(resultContainer);
+                }
+            });
+        }
+    </script>
+</head>
+
+<body onload="init();">
+    <div class="message-box">
+        <div id="inputs">
+                <div class="input-container">
+                    <div class="input-group col-md-4">
+                        <label for="startLat">Customer Latitude:</label>
+                        <input type="text" name="startLat" id="startLat">
+                    </div>
+                    <div class="input-group col-md-4">
+                        <label for="startLon">Customer Longitude:</label>
+                        <input type="text" name="startLon" id="startLon">
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="input-group col-md-4">
+                        <label for="endLat">Store Latitude:</label>
+                        <input type="text" name="endLat" id="endLat">
+                    </div>
+                    <div class="input-group col-md-4">
+                        <label for="endLon">Store Longitude:</label>
+                        <input type="text" name="endLon" id="endLon">
+                    </div>
+                </div>
+                <button id="calculateBtn">Calculate Route</button>
+        </div>
+        <div id="map"></div>
+    </div>
+
+</body>
+
+</html>
