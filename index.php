@@ -111,6 +111,8 @@
 
             // แสดงชื่อสถานที่ที่ปักบนแผนที่
             // var locationNames = [];
+            // map
+            // var locationNames = [];
             // map.Route.locations().forEach(function(location) {
             //     locationNames.push(location.label);
             // });
@@ -143,19 +145,22 @@
                 <input type="text" name="startLon" id="startLon">
             </div>
         </div>
-        <div class="input-container">
-            <div class="input-group">
-                <label for="endLat">Store Latitude:</label>
-                <input type="text" name="endLat" id="endLat">
-            </div>
-            <div class="input-group">
-                <label for="endLon">Store Longitude:</label>
-                <input type="text" name="endLon" id="endLon">
+        <div class="form-group col-md-4">
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="endLat">Store Latitude:</label>
+                    <input type="text" name="endLat" id="endLat">
+                </div>
+                <div class="input-group">
+                    <label for="endLon">Store Longitude:</label>
+                    <input type="text" name="endLon" id="endLon">
+                </div>
             </div>
         </div>
         <button id="calculateBtn">Calculate Route</button>
     </div>
 
     <div id="map"></div>
+    <div id="result"></div>
 </body>
 </html>
