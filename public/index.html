@@ -1,3 +1,4 @@
+<<<<<<< HEAD:public/index.html
 <!DOCTYPE HTML>
 <html>
 
@@ -264,4 +265,272 @@
 
 </body>
 
+=======
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Map Sample | Longdo Map</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: "Itim", cursive;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 18px;
+            background-color: #f2f2f2;
+            /* สีพื้นหลังของหน้าเว็บ */
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #map {
+            width: 100%;
+            height: 60vh;
+            border: 2px solid #dddddd;
+            margin-bottom: 20px;
+            /* เพิ่มระยะห่างด้านล่างของแผนที่ */
+            border-radius: 10px;
+            /* เพิ่มมุมขอบของแผนที่ */
+            overflow: hidden;
+            /* ซ่อนเนื้อหาที่อาจเกินขอบ */
+        }
+
+        #inputs {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 0px 25%;
+        }
+
+        .input-group {
+            margin-bottom: 8px;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            width: 150px;
+            height: 60px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        #inputs {
+            margin-bottom: 20px;
+        }
+
+        #calculateBtn {
+            text-align: center;
+        }
+
+        #result {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 70%;
+            text-align: center;
+            font-size: 20px;
+            font-family: "Itim", cursive;
+            font-weight: 400;
+            font-style: normal;
+            border: 1px solid rgb(255, 255, 255);
+            /* เส้นขอบกรอบ */
+            background-color: #ffffff;
+            padding: 10px;
+            /* ระยะห่างขอบภายในกรอบ */
+            width: 500px;
+            /* ความกว้างของกรอบ */
+            margin: auto; /* จัดกล่องไปที่ตรงกลาง */
+            margin-top: 10px; /* เพิ่มระยะห่างด้านบน */
+            margin-bottom: 10px; /* เพิ่มระยะห่างด้านล่าง */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            /* เพิ่มเงาดำ */
+        }
+        #result #shippingCostValue,
+        #result #distanceValue {
+            color: red; /* เพิ่มสีแดงให้กับ shippingCost และ distanceInKm.toFixed */
+        }
+
+        .message-box {
+            border: 1px solid rgb(255, 255, 255);
+            /* เส้นขอบกรอบ */
+            background-color: #ffffff;
+            padding: 10px;
+            /* ระยะห่างขอบภายในกรอบ */
+            width: 1400px;
+            /* ความกว้างของกรอบ */
+            margin: 30px;
+            /* ระยะห่างรอบกรอบ */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            /* เพิ่มเงาดำ */
+        }
+        .table th,
+        .table td {
+            border: none; /* ลบเส้นขอบของตารางทั้งหมด */
+            text-align: center;
+            color: rgb(46, 119, 253);
+            font-size: 30px;
+        }
+    </style>
+
+    <script type="text/javascript" src="https://api.longdo.com/map/?key=b5231ae6110f3ae6ebf8ea15401177bf"></script>
+    <script>
+        var distance;
+
+        function init() {
+            var map = new longdo.Map({
+                placeholder: document.getElementById('map')
+            });
+
+            var startLatInput = document.getElementById('startLat');
+            var startLonInput = document.getElementById('startLon');
+            var endLatInput = document.getElementById('endLat');
+            var endLonInput = document.getElementById('endLon');
+
+            document.getElementById('calculateBtn').addEventListener('click', function () {
+                var startLat = parseFloat(startLatInput.value);
+                var startLon = parseFloat(startLonInput.value);
+                var endLat = parseFloat(endLatInput.value);
+                var endLon = parseFloat(endLonInput.value);
+
+                if (isNaN(startLat) || isNaN(startLon) || isNaN(endLat) || isNaN(endLon)) {
+                    alert('Please enter valid latitude and longitude for both points.');
+                    return;
+                }
+
+                map.Route.clear();
+                map.Route.add({ lon: startLon, lat: startLat });
+                map.Route.add({ lon: endLon, lat: endLat });
+                map.Route.search();
+            });
+
+            map.Event.bind('guideComplete', function () {
+                distance = map.Route.distance();
+                console.log(distance);
+
+                // แปลงค่าระยะทางจากเมตรเป็นกิโลเมตร
+                var distanceInKm = distance * 0.001;
+
+                var shippingCost;
+                if (distanceInKm <= 1) {
+                    shippingCost = 39;
+                } else if (distanceInKm <= 9) {
+                    shippingCost = 39 + (distanceInKm - 1) * 8;
+                } else if (distanceInKm <= 50) {
+                    shippingCost = 39 + 8 * 8 + (distanceInKm - 9) * 10;
+                } else {
+                    shippingCost = "ระยะทางเกิน 50 กิโลเมตร";
+                }
+
+                // console.log('Shipping Cost:', shippingCost);
+
+                // แสดงผล shippingCost บนหน้าเว็บ
+                var resultContainer = document.getElementById('result');
+                if (resultContainer) {
+                    resultContainer.innerHTML = '<span class="shipping-cost">ค่าใช้จ่ายในการจัดส่งสินค้า: <span id="shippingCostValue">' + shippingCost + '</span> บาท</span><br><span class="distance">ระยะทาง: <span id="distanceValue">' + distanceInKm.toFixed(0) + '</span> กิโลเมตร</span>';
+                } else {
+                    // สร้าง element div ใหม่เพื่อแสดงผล shippingCost หากยังไม่มี
+                    resultContainer = document.createElement('div');
+                    resultContainer.id = 'result';
+                    resultContainer.innerHTML = '<span class="shipping-cost">ค่าใช้จ่ายในการจัดส่งสินค้า: <span id="shippingCostValue">' + shippingCost + '</span> บาท</span><br><span class="distance">ระยะทาง: <span id="distanceValue">' + distanceInKm.toFixed(1) + '</span> กิโลเมตร</span>';
+                    document.body.appendChild(resultContainer);
+                }
+            });
+        }
+    </script>
+</head>
+
+<body onload="init();">
+    <div class="message-box">
+        <div id="inputs">
+            <img src="หัวข้ออ.png">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col">ตำแหน่งลูกค้า</th>
+                            <th scope="col">ตำแหน่งร้านค้า</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="input-container">
+                    <div class="input-group col-md-4">
+                        <label for="startLat">Customer Latitude:</label>
+                        <input type="text" name="startLat" id="startLat" placeholder="ละติจูดลูกค้า">
+                    </div>
+                    <div class="input-group col-md-4">
+                        <label for="endLat">Store Latitude:</label>
+                        <input type="text" name="endLat" id="endLat" placeholder="ละติจูดร้านค้า">
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="input-group col-md-4">
+                        <label for="startLon">Customer Longitude:</label>
+                        <input type="text" name="startLon" id="startLon" placeholder="ลองจิจูดลูกค้า">
+                    </div>
+                    <div class="input-group col-md-4">
+                        <label for="endLon">Store Longitude:</label>
+                        <input type="text" name="endLon" id="endLon" placeholder="ลองจิจูดร้านค้า">
+                    </div>
+                </div>
+                <button id="calculateBtn">Calculate Route</button>
+        </div>
+        <div id="map"></div>
+        <div class="shadow p-3 mb-5 bg-white rounded " id="result">
+            <span class="shipping-cost">ค่าใช้จ่ายในการจัดส่งสินค้า: <span id="shippingCostValue"></span> บาท</span><br>
+            <span class="distance">ระยะทาง: <span id="distanceValue"></span> กิโลเมตร</span>
+        </div>
+    </div>
+    
+
+</body>
+
+>>>>>>> 767ee6fff2b4fd16f94bec3cbf397c406fb0cde9:index.html
 </html>
