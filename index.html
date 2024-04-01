@@ -144,6 +144,13 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             /* เพิ่มเงาดำ */
         }
+        .table th,
+        .table td {
+            border: none; /* ลบเส้นขอบของตารางทั้งหมด */
+            text-align: center;
+            color: rgb(46, 119, 253);
+            font-size: 30px;
+        }
     </style>
 
     <script type="text/javascript" src="https://api.longdo.com/map/?key=b5231ae6110f3ae6ebf8ea15401177bf"></script>
@@ -192,7 +199,7 @@
                 } else if (distanceInKm <= 50) {
                     shippingCost = 39 + 8 * 8 + (distanceInKm - 9) * 10;
                 } else {
-                    shippingCost = "Please contact customer service for shipping rates for distances greater than 50 kilometers.";
+                    shippingCost = "ระยะทางเกิน 50 กิโลเมตร";
                 }
 
                 // console.log('Shipping Cost:', shippingCost);
@@ -216,25 +223,33 @@
 <body onload="init();">
     <div class="message-box">
         <div id="inputs">
-            <h2>โปรแกรมคำนวณระยะทาง กรณีฝากซื้อนอกระบบ</h2>
+            <img src="หัวข้ออ.png">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col">ตำแหน่งลูกค้า</th>
+                            <th scope="col">ตำแหน่งร้านค้า</th>
+                        </tr>
+                    </thead>
+                </table>
                 <div class="input-container">
                     <div class="input-group col-md-4">
                         <label for="startLat">Customer Latitude:</label>
-                        <input type="text" name="startLat" id="startLat">
+                        <input type="text" name="startLat" id="startLat" placeholder="ละติจูดลูกค้า">
                     </div>
                     <div class="input-group col-md-4">
                         <label for="endLat">Store Latitude:</label>
-                        <input type="text" name="endLat" id="endLat">
+                        <input type="text" name="endLat" id="endLat" placeholder="ละติจูดร้านค้า">
                     </div>
                 </div>
                 <div class="input-container">
                     <div class="input-group col-md-4">
                         <label for="startLon">Customer Longitude:</label>
-                        <input type="text" name="startLon" id="startLon">
+                        <input type="text" name="startLon" id="startLon" placeholder="ลองจิจูดลูกค้า">
                     </div>
                     <div class="input-group col-md-4">
                         <label for="endLon">Store Longitude:</label>
-                        <input type="text" name="endLon" id="endLon">
+                        <input type="text" name="endLon" id="endLon" placeholder="ลองจิจูดร้านค้า">
                     </div>
                 </div>
                 <button id="calculateBtn">Calculate Route</button>
